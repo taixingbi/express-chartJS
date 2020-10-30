@@ -1,4 +1,11 @@
 h5 {
-    border: 1px solid powderblue;
-    text-align: center;
-  }
+  border: 1px solid powderblue;
+  text-align: center;
+}
+
+component_chart {
+
+  border: 1px solid powderblue;
+  background-color: bisque;
+}
+

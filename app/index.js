@@ -1,34 +1,63 @@
+// setInterval(count, 1000);
 
+cnt= 0;
+function count(){
+    cnt = cnt + 1;
+    console.log(cnt);
+    add()
+}
 
-$(function() {   
-    var canvas = document.getElementById("canvas");  
-        if(canvas.getContext) {  
-            var ctx = canvas.getContext("2d");  
-
-            var myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ["Tokyo",	"Mumbai",	"Mexico City",	"Shanghai",	"Sao Paulo",	"New York",	"Karachi","Buenos Aires",	"Delhi","Moscow"],
-                    datasets: [{
-                        label: 'Series 1', // Name the series
-                        data: [500,	50,	2424,	14040,	14141,	4111,	4544,	47,	5555, 6811], // Specify the data values array
-                        fill: false,
-                        borderColor: '#2196f3', // Add custom color border (Line)
-                        backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
-                        borderWidth: 1 // Specify bar border width
-                    }]},
-                options: {
-                  responsive: true, // Instruct chart js to respond nicely.
-                  maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height 
-                }
-            });
-
-        }  
-});
-
-
-
-
-
+function add(){
+    var data= [0.9,	-0.8, 0.2, -0.6, 0.6, 0.9,	-0.8, 0.2, -0.6, 0.6];
+    var labels= ["09:45:23", "09:45:23", "09:45:23", "09:45:23", "09:45:23", "09:45:23", "09:45:23", "09:45:23", "09:45:23", "09:45:23"];
     
+    i= cnt;
+    updateChart(data.slice(i, i+5), labels.slice(i, i+5));
+}
 
+function updateChart (data, labels) {
+    window.myChart.data.labels= labels;
+    window.myChart.data.datasets[0].data= data;
+    window.myChart.update();
+};
+
+window.onload = function() {   
+    var canvas = document.getElementById("canvas");  
+    var ctx = canvas.getContext("2d");  
+
+    maxValueYPixel= 200;
+    minValueYPixel= 130;
+    var gradient = ctx.createLinearGradient(0, maxValueYPixel, 0, minValueYPixel);//0 200 0 130
+    gradient.addColorStop(0, 'green');
+    gradient.addColorStop(1, 'red');
+
+    window.myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Machine Learning',
+                data: [], 
+                fill: false,
+                borderColor: '#2196f3', 
+                backgroundColor: '#2196f3', 
+                borderWidth: 1,
+                borderColor: gradient,
+            }]},
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                  ticks: {
+                    suggestedMin: -1,
+                    suggestedMax: 1,
+                  },
+                }],
+
+              }
+        }
+    });
+
+   
+};
